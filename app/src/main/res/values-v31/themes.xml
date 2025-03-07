@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Splash Screen Theme -->
+    <style name="Theme.Filmhub" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowSplashScreenBackground">@color/cardview_dark_background</item>
+        <item name="android:windowSplashScreenAnimationDuration">3000</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/app_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.Filmhub.Main</item>
+    </style>
+
+    <!-- Main App Theme -->
+    <style name="Theme.Filmhub.Main" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your main app theme here -->
+    </style>
+</resources>
