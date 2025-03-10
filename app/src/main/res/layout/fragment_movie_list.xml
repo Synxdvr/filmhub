@@ -2,11 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <!-- Progress Bar -->
     <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/progressBar"
+        android:id="@+id/pi_movie_list_loader"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:indeterminate="true"
@@ -18,18 +19,17 @@
 
     <!-- Error Text -->
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/errorText"
+        android:id="@+id/tv_error_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Error loading movies"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/progressBar" />
+        app:layout_constraintTop_toBottomOf="@id/pi_movie_list_loader" />
 
     <!-- RecyclerView wrapped in SwipeRefreshLayout -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
+        android:id="@+id/srl_movie_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

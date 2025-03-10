@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.filmhub.adapter.MovieAdapter
 import com.example.filmhub.databinding.FragmentMovieListBinding
 import com.example.filmhub.utils.APIConfig
@@ -39,27 +40,42 @@ class MovieListFragment : Fragment() {
             adapter = movieAdapter
         }
 
-        binding.swipeRefreshLayout.setOnRefreshListener {
+        binding.srlMovieList.setOnRefreshListener {
+            movieViewModel.currentPage = 1
             movieViewModel.fetchPopularMovies(APIConfig.API_KEY)
         }
 
         movieViewModel.movies.observe(viewLifecycleOwner) { movies ->
-            binding.progressBar.visibility = View.GONE
-            binding.swipeRefreshLayout.isRefreshing = false
+            binding.piMovieListLoader.visibility = View.GONE
+            binding.srlMovieList.isRefreshing = false
 
             if (!movies.isNullOrEmpty()) {
                 binding.rvMovieList.visibility = View.VISIBLE
-                binding.errorText.visibility = View.GONE
-                movieAdapter.submitList(movies)
+                binding.tvErrorText.visibility = View.GONE
+                movieAdapter.submitList(movies.toList())
             } else {
                 binding.rvMovieList.visibility = View.GONE
-                binding.errorText.visibility = View.VISIBLE
-                binding.errorText.text = "No movies available. Please try again later."
+                binding.tvErrorText.visibility = View.VISIBLE
+                binding.tvErrorText.text = "No movies available. Please try again later."
             }
         }
 
-
-        binding.progressBar.visibility = View.VISIBLE
+        binding.piMovieListLoader.visibility = View.VISIBLE
         movieViewModel.fetchPopularMovies(APIConfig.API_KEY)
+
+        binding.rvMovieList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val layoutManager = recyclerView.layoutManager as GridLayoutManager
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
+                val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+
+                if (!movieViewModel.isLoading && movieViewModel.hasMorePages()) {
+                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0) {
+                        movieViewModel.loadNextPage(APIConfig.API_KEY)
+                    }
+                }
+            }
+        })
     }
 }

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.filmhub.data.model.Movie
 import com.example.filmhub.databinding.MovieCardBinding
+import com.example.filmhub.utils.APIConfig
 
 class MovieAdapter(private val onItemClick: (Movie) -> Unit) :
     ListAdapter<Movie, MovieAdapter.MovieViewHolder>(MovieDiffCallback()) {
@@ -18,8 +19,7 @@ class MovieAdapter(private val onItemClick: (Movie) -> Unit) :
             binding.tvMovieTitle.text = movie.title
             binding.tvMovieRating.text = "${movie.voteAverage}"
             Glide.with(binding.ivMoviePoster.context)
-                .load("https://image.tmdb.org/t/p/w500${movie.posterPath}")
-                .into(binding.ivMoviePoster)
+                .load("${APIConfig.POSTER_URL}${movie.posterPath}").into(binding.ivMoviePoster)
             binding.root.setOnClickListener { onItemClick(movie) }
         }
     }

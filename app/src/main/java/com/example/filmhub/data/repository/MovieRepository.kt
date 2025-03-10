@@ -6,9 +6,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class MovieRepository {
-    suspend fun getPopularMovies(apiKey: String): List<Movie>? {
+    suspend fun getPopularMovies(apiKey: String, page: Int): List<Movie>? {
         return withContext(Dispatchers.IO) {
-            val response = RetrofitClient.instance.getPopularMovies(apiKey)
+            val response = RetrofitClient.instance.getPopularMovies(apiKey, page)
             if (response.isSuccessful) {
                 response.body()?.results
             } else {

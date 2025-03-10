@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.filmhub.databinding.FragmentMovieDetailBinding
+import com.example.filmhub.utils.APIConfig
 
 class MovieDetailFragment : Fragment() {
     private lateinit var binding: FragmentMovieDetailBinding
@@ -28,6 +29,6 @@ class MovieDetailFragment : Fragment() {
         binding.tvMovieDescription.text = movie.overview
         binding.tvMovieRating.text = "${movie.voteAverage}"
         Glide.with(binding.ivMovieBackdrop.context)
-            .load("https://image.tmdb.org/t/p/w500${movie.backdropPath}").into(binding.ivMovieBackdrop)
+            .load("${APIConfig.POSTER_URL}${movie.backdropPath}").into(binding.ivMovieBackdrop)
     }
 }
