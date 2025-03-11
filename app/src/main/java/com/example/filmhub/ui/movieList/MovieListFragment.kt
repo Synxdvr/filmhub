@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.filmhub.R
 import com.example.filmhub.adapter.MovieAdapter
 import com.example.filmhub.databinding.FragmentMovieListBinding
 import com.example.filmhub.utils.APIConfig
@@ -56,7 +57,7 @@ class MovieListFragment : Fragment() {
             } else {
                 binding.rvMovieList.visibility = View.GONE
                 binding.tvErrorText.visibility = View.VISIBLE
-                binding.tvErrorText.text = "No movies available. Please try again later."
+                binding.tvErrorText.text = getString(R.string.error_text)
             }
         }
 
